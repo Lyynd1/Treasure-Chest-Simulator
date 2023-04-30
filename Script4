@@ -1,0 +1,234 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+   Name = "Treasure Chest Simulator",
+   LoadingTitle = "Project Kitten Free Hub",
+   LoadingSubtitle = "by Lyynd#0009",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+   Discord = {
+      Enabled = true,
+      Invite = "RXj5yGq58u", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+Rayfield:Notify({
+   Title = "loading The Script",
+   Content = "This Take about 10 sec don't worry",
+   Duration = 4,
+   Image = 4483362458,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "Close",
+         Callback = function()
+         print("Welcome to the Free Project Kitten Script")
+         end
+   },
+},
+})
+
+local Tab = Window:CreateTab("Main Farm", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Farming")
+
+local isToggled = false
+local connection = nil
+
+local function Dig()
+local args = {
+    [1] = "Click"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Click"):FireServer(unpack(args))	
+end
+
+
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Dig",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        isToggled = Value
+        if isToggled then
+            connection = game:GetService("RunService").Heartbeat:Connect(function()
+                Dig()
+            end)
+        else
+            if connection then
+                connection:Disconnect()
+            end
+        end
+    end,
+})
+
+local isToggled = false
+local connection = nil
+	
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Teleport Island",
+    Options = {"World 2","World 3","World 4", "World 5", "World 6", "World 7", "World 8", "World 9" },
+    CurrentOption = {"Option 1"},
+    MultipleOptions = false,
+    Flag = "TeleportDropdown",
+    Callback = function(Option)
+        if Option[1] == "World 2" then
+            local pos = Vector3.new(117.856, -97.7191, 121.05)
+            local cf = CFrame.new(pos.x, pos.y, pos.z)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cf
+        end
+        
+        if Option[1] == "World 3" then
+            local pos = Vector3.new(119.412, -97.7191, 26.746)
+            local cf = CFrame.new(pos.x, pos.y, pos.z)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cf
+        end
+        
+        if Option[1] == "World 4" then
+            local pos = Vector3.new(116.098, -97.5546, -77.303)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+        
+		if Option[1] == "World 5" then
+            local pos = Vector3.new(120.288, -97.7191, -176)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+        
+        if Option[1] == "World 6" then
+            local pos = Vector3.new(120.254, -97.5401, -276.5)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+        
+        if Option[1] == "World 7" then
+            local pos = Vector3.new(91.8208, -100.724, -361)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+        if Option[1] == "World 8" then
+            local pos = Vector3.new(93.7447, -101.464, -461)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+         if Option[1] == "World 9" then
+            local pos = Vector3.new(87.6327, -100.481, -560.9)
+            local orientation = CFrame.new(0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 1, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos) * orientation
+        end
+	end
+  
+})
+
+
+local Slider = Tab:CreateSlider({
+   Name = "Slider Example",
+   Range = {0, 100},
+   Increment = 10,
+   Suffix = "WalkSpeed",
+   CurrentValue = 10,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+   end,
+})
+
+local Tab = Window:CreateTab("Buy Shovels", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Auto Buy!")
+
+local isToggled = false
+local connection = nil
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Buy Shovel",
+    Options = {"Shovels 2","Shovels 3","Shovels 4", "Shovels 5", "Shovels 6", "Shovels 7", "Shovels 8", "Shovels 9" },
+    CurrentOption = {"Option 1"},
+    MultipleOptions = false,
+    Flag = "BuytDropdown",
+    Callback = function(Option)
+        if Option[1] == "Shovels 2" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 2
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+        end
+        
+        if Option[1] == "Shovels 3" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 3
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+        end
+        
+        if Option[1] == "Shovels 4" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 4
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+        end
+        
+		if Option[1] == "Shovels 5" then
+            local args = {
+    [1] = "Equip",
+    [2] = 5
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+        end
+        
+        if Option[1] == "Shovels 6" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 6
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+		end
+        
+        if Option[1] == "Shovels 7" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 7
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+		end
+        if Option[1] == "Shovels 8" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 8
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+		end
+         if Option[1] == "Shovels 9" then
+            local args = {
+    [1] = "Purchase",
+    [2] = 9
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events"):WaitForChild("Shovel"):FireServer(unpack(args))
+		end
+	end
+  
+})
